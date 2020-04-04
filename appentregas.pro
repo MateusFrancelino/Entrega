@@ -8,10 +8,12 @@ SOURCES += \
 
 HEADERS += \
     CardapioEstatico.h \
-    CriaPedido.h \
     Debug.h \
     Entregas.h \
+    FuncaoRandom.h \
+    ListaClientes.h \
     ListaGenerica.h \
     ListaMotoboy.h \
+    ManipulaPedido.h \
     PedidosPreCarregados.h \
     StructTipos.h

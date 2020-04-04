@@ -34,6 +34,26 @@ void CriaListaMotoboy(ListaCircular<ENTREGADOR>&motoboy){
     novo->dado.tempoentrega=7;
     novo->dado.disponivel=true;
     InsereCicurlarFim(motoboy,novo->dado);
+    novo->dado.nome="vladimir";
+    novo->dado.tempoentrega=7;
+    novo->dado.disponivel=true;
+    InsereCicurlarFim(motoboy,novo->dado);
+    novo->dado.nome="salnorabo";
+    novo->dado.tempoentrega=7;
+    novo->dado.disponivel=true;
+    InsereCicurlarFim(motoboy,novo->dado);
+    novo->dado.nome="campeao";
+    novo->dado.tempoentrega=7;
+    novo->dado.disponivel=true;
+    InsereCicurlarFim(motoboy,novo->dado);
+    novo->dado.nome="vruuuuum";
+    novo->dado.tempoentrega=7;
+    novo->dado.disponivel=true;
+    InsereCicurlarFim(motoboy,novo->dado);
+
+
+
+
 }
 
 

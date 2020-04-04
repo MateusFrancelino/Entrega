@@ -23,8 +23,32 @@ void InserePListaEstatica(ListaEstatica<TIPO,MAX>&l,TIPO dado,int pos){
 
     l.item[pos].dado=dado;
     l.qtd++;
-
 };
+
+template<typename TIPO, int MAX>
+TIPO obterItemLista(ListaEstatica<TIPO,MAX>&l,int pos){
+    if(pos<MAX){
+        return l.item[pos].dado;
+    }
+    throw "item nao existe";
+}
+
+
+template <typename TIPO,int MAX>
+bool buscaItem(ListaEstatica<TIPO,MAX>&l,TIPO dado){
+
+    return buscaItem(l,dado);
+
+
+}
+
+template <typename TIPO,int MAX>
+int descobreIndiceLista(ListaEstatica<TIPO,MAX>&l,TIPO dado){
+
+    return descobreIndiceLista(l,dado);
+
+}
+
 
 
 
@@ -82,15 +106,13 @@ if(nav==l.inicio){
 else{
     nav->proximo=NULL;
     delete excluir;
+}}}
 
+
+template <typename TIPO>
+void debug(ListaEncadeada<TIPO>&l){
+    debug(l);
 }
-
-
-}
-
-}
-
-
 
 
 
@@ -154,18 +176,12 @@ void ExcluirListaDuplaEnc(ListaDuplaEnc<TIPO>&l){
         ElementoDuplaEnc<TIPO>*nav=excluir->proximo;
         l.inicio=nav;
         delete excluir;
+      }}
 
-
-    }
-
-
-
-
-
-
+template <typename TIPO>
+void debug(ListaDuplaEnc<TIPO>&l){
+    debug(l);
 }
-
-
 
 
 
@@ -206,7 +222,10 @@ void InsereCicurlarFim(ListaCircular<TIPO>&l,TIPO dado){
 }
 
 
-
+template <typename TIPO>
+void debug(ListaCircular<TIPO>&l){
+    debug(l);
+}
 
 
 

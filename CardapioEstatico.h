@@ -1,6 +1,7 @@
 #ifndef CARDAPIOESTATICO_H
 #define CARDAPIOESTATICO_H
 #include <StructTipos.h>
+
 template <typename TIPO,int MAX>
 void IniciaCardapioEstatico(ListaEstatica<TIPO,MAX> &L){
     PRODUTO cardapio;

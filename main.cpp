@@ -5,81 +5,85 @@
 #include <ListaMotoboy.h>
 #include <PedidosPreCarregados.h>
 #include <Debug.h>
-#include <CriaPedido.h>
 #include <Entregas.h>
+#include <ManipulaPedido.h>
+#include <ListaClientes.h>
+#include <FuncaoRandom.h>
+
+
+
 using namespace std;
 
 
 
 
-void concluiPedido(ListaDuplaEnc<PEDIDO>&pedido,ListaDuplaEnc<PEDIDO>&pedidoconcluido){
-    ElementoDuplaEnc<PEDIDO>*novo=new ElementoDuplaEnc<PEDIDO>;
-    novo->proximo=NULL;
-    novo->anterior=NULL;
-    ElementoDuplaEnc<PEDIDO>*nav=pedido.inicio;
-    novo->dado.entregador=nav->dado.entregador;
-    novo->dado.precototal=nav->dado.precototal;
-    novo->dado.tempopreparo=nav->dado.tempopreparo;
+void quebracaixa(ListaDuplaEnc<PEDIDO>pedidoconcluido){
 
-    carrinhoParaPedido(novo->dado.produtos,nav->dado.produtos);
-    if(pedidoconcluido.inicio==NULL){
-    pedidoconcluido.inicio=novo;
+    ElementoDuplaEnc<PEDIDO>*nav=pedidoconcluido.inicio;
 
-    pedidoconcluido.fim=novo;
+    float conferencia1=0.00, conferencia2=0.00;
 
-    }
-    else{
-        ElementoDuplaEnc<PEDIDO>*nav=pedidoconcluido.inicio;
-        while (nav->proximo!=NULL) {
-            nav=nav->proximo;
-        }
-        nav->proximo=novo;
-        novo->anterior=nav;
-        pedidoconcluido.fim=novo;
-        }
-
-    }
-
-
-
-
-
-void diminuiTempoEntrega(ListaCircular<ENTREGADOR>&motoboy){
-    ElementoCircular<ENTREGADOR>*nav=motoboy.inicio;
-    int i=0;
-    while(nav!=motoboy.inicio||(motoboy.inicio!=NULL&&i==0)){
-
-        if(nav->dado.disponivel==false){
-            nav->dado.tempoentrega--;
-            if(nav->dado.tempoentrega==0)
-                nav->dado.disponivel=true;
-
-
-            }
-    i++;
-    nav=nav->proximo;
-    }
-
-
-
-    }
-
-
-
-
-
-
-void debug(ListaCircular<ENTREGADOR>motoboy){
-    ElementoCircular<ENTREGADOR>*nav=motoboy.inicio;
-    int i=0;
-
-    while(nav!=motoboy.inicio||(motoboy.inicio!=NULL&&i==0)){
-
-        cout<<"nome do entregador : "<<nav->dado.nome<<endl<<"tempo para entregar "<<nav->dado.tempoentrega<<endl<<"o entregador esta:"<<nav->dado.disponivel<<endl;
-        i++;
+    while(nav!=NULL){
+        conferencia1+=nav->dado.precototal;
         nav=nav->proximo;
     }
+
+    nav=pedidoconcluido.fim;
+
+    while(nav!=NULL){
+        conferencia2+=nav->dado.precototal;
+        nav=nav->anterior;
+    }
+
+
+    cout<<conferencia1<<endl;
+    cout<<conferencia2<<endl;
+    if(conferencia1==conferencia2){
+        cout<<"Total arrecadado =[R$ "<<conferencia1<<"]"<<endl;
+    }
+
 }
+
+
+template <int MAX>
+bool buscaItem(ListaEstatica<PRODUTO,MAX>&l,PRODUTO dado){
+
+    for(int i=0;i<l.qtd;i++){
+        if(l.item[i].dado.nome==dado.nome){
+            return true;
+        }
+    }
+    return false;
+}
+
+template <int MAX>
+int descobreIndiceLista(ListaEstatica<PRODUTO,MAX>&l,PRODUTO dado){
+    for(int i=0;i<l.qtd;i++){
+        if(l.item[i].dado.nome==dado.nome){
+            return i;
+        }
+    }
+    return -1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -90,9 +94,25 @@ void debug(ListaCircular<ENTREGADOR>motoboy){
 
 int main()
 {
+    ListaEstatica<CLIENTE,5>cliente;
+    iniciaCliente(cliente);
 
     ListaEstatica<PRODUTO,5>cardapio;
     IniciaCardapioEstatico(cardapio);
+    PRODUTO coisa;
+    coisa=obterItemLista(cardapio,2);
+    //cout<<coisa.nome<<endl;
+    bool l;
+    l=buscaItem(cardapio,coisa);
+    //cout<<l<<endl;
+
+
+
+
+
+    int coisado;
+    coisado=descobreIndiceLista(cardapio,coisa);
+
 
     ListaEncadeada<PRODUTO>carrinho;
     inicializaListaEnc(carrinho);
@@ -110,24 +130,29 @@ int main()
 
 int numeropedido=0;
 
-    for(int tempo=0; tempo<300; tempo++){
+    for(int tempo=0; tempo<150000; tempo++){
 
 
         if(tempo%2==0){
-          CarregarPedidos(cardapio,carrinho,numeropedido);
+          CarregarPedidos(cardapio,carrinho);
          // debug(carrinho);
           //cout<<numeropedido<<endl;
-          criaPedido(pedido,carrinho);
+          criaPedido(pedido,carrinho,cliente.item[sorteio(4)].dado);
           ExcluiListaEnc(carrinho);
 
         }
 
 
         if(pedido.inicio!=NULL){
+           cout<<tempo;
+           system("cls");
             //debug(pedido);
 
 
+
+
             diminuiTempoPreparo(pedido);
+            calculaTempoTotal(pedido);
 
             if(disponibilidadeMotoboy(motoboy)==true && entregaPronta(pedido)==true){
 
@@ -149,9 +174,9 @@ int numeropedido=0;
     }
 
 
+quebracaixa(pedidoconcluido);
 
-
-cout<<"conlcuido"<<endl;
+//cout<<"conlcuido"<<endl;
 debug(pedidoconcluido);
 
 

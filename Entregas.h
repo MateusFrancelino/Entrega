@@ -5,7 +5,7 @@
 bool entregaPronta(ListaDuplaEnc<PEDIDO>pedido){
     ElementoDuplaEnc<PEDIDO>*nav=pedido.inicio;
     while(nav!=NULL){
-        if(nav->dado.tempopreparo==0){
+        if(nav->dado.tempopreparo<=0){
             return true;
         }
         nav=nav->proximo;
@@ -13,6 +13,27 @@ bool entregaPronta(ListaDuplaEnc<PEDIDO>pedido){
 
     return false;
 }
+
+
+
+
+void diminuiTempoEntrega(ListaCircular<ENTREGADOR>&motoboy){
+    ElementoCircular<ENTREGADOR>*nav=motoboy.inicio;
+    int i=0;
+    while(nav!=motoboy.inicio||(motoboy.inicio!=NULL&&i==0)){
+
+        if(nav->dado.disponivel==false){
+            nav->dado.tempoentrega--;
+            if(nav->dado.tempoentrega==0)
+                nav->dado.disponivel=true;
+
+
+            }
+    i++;
+    nav=nav->proximo;
+    }
+}
+
 
 
 
@@ -33,6 +54,8 @@ void entregarPedido(ListaCircular<ENTREGADOR>&motoboy,ListaDuplaEnc<PEDIDO>&pedi
 
 
 }
+
+
 
 
 
