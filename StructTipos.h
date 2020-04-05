@@ -10,14 +10,11 @@ struct PRODUTO{
     };
 
 
-
 struct CLIENTE{
     string nome=" ";
     string endereco=" ";
-
-
-
 };
+
 
 struct ENTREGADOR{
     string nome=" ";
@@ -27,7 +24,7 @@ struct ENTREGADOR{
 
 
 struct PEDIDO{
-    float precototal=0.0;
+    float precototal=0;
     int tempopreparo=0;
     int tempototal=0;
     int horadopedido=0;
@@ -35,7 +32,6 @@ struct PEDIDO{
     CLIENTE cliente;
     ENTREGADOR entregador;
     ListaEncadeada<PRODUTO>produtos;
-
 };
 
 

@@ -9,6 +9,7 @@
 #include <ManipulaPedido.h>
 #include <ListaClientes.h>
 #include <FuncaoRandom.h>
+#include <FechamentoCaixa.h>
 
 
 
@@ -17,54 +18,6 @@ using namespace std;
 
 
 
-void quebracaixa(ListaDuplaEnc<PEDIDO>pedidoconcluido){
-
-    ElementoDuplaEnc<PEDIDO>*nav=pedidoconcluido.inicio;
-
-    float conferencia1=0.00, conferencia2=0.00;
-
-    while(nav!=NULL){
-        conferencia1+=nav->dado.precototal;
-        nav=nav->proximo;
-    }
-
-    nav=pedidoconcluido.fim;
-
-    while(nav!=NULL){
-        conferencia2+=nav->dado.precototal;
-        nav=nav->anterior;
-    }
-
-
-    cout<<conferencia1<<endl;
-    cout<<conferencia2<<endl;
-    if(conferencia1==conferencia2){
-        cout<<"Total arrecadado =[R$ "<<conferencia1<<"]"<<endl;
-    }
-
-}
-
-
-template <int MAX>
-bool buscaItem(ListaEstatica<PRODUTO,MAX>&l,PRODUTO dado){
-
-    for(int i=0;i<l.qtd;i++){
-        if(l.item[i].dado.nome==dado.nome){
-            return true;
-        }
-    }
-    return false;
-}
-
-template <int MAX>
-int descobreIndiceLista(ListaEstatica<PRODUTO,MAX>&l,PRODUTO dado){
-    for(int i=0;i<l.qtd;i++){
-        if(l.item[i].dado.nome==dado.nome){
-            return i;
-        }
-    }
-    return -1;
-}
 
 
 
@@ -76,14 +29,19 @@ int descobreIndiceLista(ListaEstatica<PRODUTO,MAX>&l,PRODUTO dado){
 
 
 
+// listas genéricas
+//2 listas estaticas : cardapio e cliente
+//1 lista circular: entregador
+//2 listas encadeadas: carrinho e produtos
+//2 listas duplamente encadeadas: pedido e pedidoconcluido
 
 
+// explicação sobre as escolhas adotadas e resultados obtidos
 
-
-
-
-
-
+// a listas estaticas do cardapio e cliente, e a lista circular motoboy foram preenchidas antes da simulaçao comecar
+// implementamos uma funçao pre carregada de pedidos onde é sorteado aleatoriamente novos pedidos, para melhor simulaçao de um restaurante
+// apos o inicio da simulacao do restaurante, o primeiro "carrinho" é feito aleatoriamente pela funcao sorteio() chamada na funçao CarregarPedidos() no PedidosPreCarregados.h
+// apos isso, é chamada a funçao criaPedido() para passar os produtos selecionados do carrinho para o pedido, logo, a funcao ExcluiListaEnc() é chamada para esvaziar o carrinho para a proxima compra
 
 
 
@@ -94,90 +52,61 @@ int descobreIndiceLista(ListaEstatica<PRODUTO,MAX>&l,PRODUTO dado){
 
 int main()
 {
-    ListaEstatica<CLIENTE,5>cliente;
-    iniciaCliente(cliente);
 
-    ListaEstatica<PRODUTO,5>cardapio;
-    IniciaCardapioEstatico(cardapio);
-    PRODUTO coisa;
-    coisa=obterItemLista(cardapio,2);
-    //cout<<coisa.nome<<endl;
-    bool l;
-    l=buscaItem(cardapio,coisa);
-    //cout<<l<<endl;
+    ListaEstatica<CLIENTE,5>clientes;          // Cria a Lista Estatica de Clientes
+    iniciaCliente(clientes);                   // Atribui Dados a Lista de Clientes
 
+    ListaEstatica<PRODUTO,18>cardapio;       // Cria a Lista Estatica Cardapio
+    IniciaCardapioEstatico(cardapio);        // Atribui Dados a Lista Cardapio
 
+    ListaEncadeada<PRODUTO>carrinho;         // Cria Lista Encadeada Carrinho
+    inicializaListaEnc(carrinho);            //  Inicia a Lista Encadeada
 
+    ListaDuplaEnc<PEDIDO>pedidos;             // Cria a Lista Duplamente Encadeada de Pedidos
+    inicializaListaDuplaEnc(pedidos);         // Inicia a Lista de Pedidos
 
+    ListaDuplaEnc<PEDIDO>pedidosconcluidos;     // Cria a Lista Duplamente Encadeada de Pedidos Concluidos
+    inicializaListaDuplaEnc(pedidosconcluidos); // Inicia a Lista de Pedidos Concluidos
 
-    int coisado;
-    coisado=descobreIndiceLista(cardapio,coisa);
-
-
-    ListaEncadeada<PRODUTO>carrinho;
-    inicializaListaEnc(carrinho);
-
-    ListaDuplaEnc<PEDIDO>pedido;
-    inicializaListaDuplaEnc(pedido);
-
-    ListaDuplaEnc<PEDIDO>pedidoconcluido;
-    inicializaListaDuplaEnc(pedidoconcluido);
-
-    ListaCircular<ENTREGADOR>motoboy;
-    inicializaListaCircular(motoboy);
-    CriaListaMotoboy(motoboy);
+    ListaCircular<ENTREGADOR>entregadores;       // Cria a Lista Circular de Entregadores
+    inicializaListaCircular(entregadores);       // Inicia a Lista Circular de Entregadores
+    CriaListaMotoboy(entregadores);             //  Atribiu Dados a Lista Circular de Entregadores
 
 
-int numeropedido=0;
-
-    for(int tempo=0; tempo<150000; tempo++){
 
 
-        if(tempo%2==0){
-          CarregarPedidos(cardapio,carrinho);
-         // debug(carrinho);
-          //cout<<numeropedido<<endl;
-          criaPedido(pedido,carrinho,cliente.item[sorteio(4)].dado);
-          ExcluiListaEnc(carrinho);
+    for(int tempo=0; tempo<300; tempo++){//  Inicio do loop de 300 Minutos
 
+        if(tempo%2==0){         // A Cada 2 Minutos um Novo Pedido é Efetuado
+          CarregarPedidos(cardapio,carrinho);   // Adicionando Itens ao Carrinho de Compras
+          criaPedido(pedidos,carrinho,clientes.item[sorteio(4)].dado); //Passando os Itens do Carrinho Para um Pedido  //[sorteio()] Seleciona Aleatoriamente um Cliente da Lista de Clientes Precarregada
+          ExcluiListaEnc(carrinho);             //Limpando o Carrinho
         }
 
+        if(pedidos.inicio!=NULL){    // Se Existe um Pedido na Lista de Pedidos
 
-        if(pedido.inicio!=NULL){
-           cout<<tempo;
-           system("cls");
-            //debug(pedido);
-
+            diminuiTempoPreparo(pedidos); // Diminuir o Tempo de Preparo de Todos os Pedidos na Fila
+            diminuiTempoEntregador(entregadores); // Diminuir o Tempo de Entrega dos Entregadores Que Ja Estao Entregando
 
 
 
-            diminuiTempoPreparo(pedido);
-            calculaTempoTotal(pedido);
+            if(disponibilidadeEntregador(entregadores)==true && entregaPronta(pedidos)==true){  //  disponibilidadeEntregador() Verifica se Existe Algum Entregador Disponivel Para Realizar a Entrega
+                                                                                             //  entregaPronta() Verifica se Existe Algum Pedido Pronto Para Ser Entregue
 
-            if(disponibilidadeMotoboy(motoboy)==true && entregaPronta(pedido)==true){
-
-                entregarPedido(motoboy,pedido);
-
-
-                concluiPedido(pedido,pedidoconcluido);
-
-                ExcluirListaDuplaEnc(pedido);
-             }
-
-
-        diminuiTempoEntrega(motoboy);
+                entregarPedido(entregadores,pedidos);  //Atribiu um Entregador ao Pedido
+                concluiPedido(pedidos,pedidosconcluidos); //Passa o Pedido Entregue Para a Lista de Pedidos Concluidos
+                ExcluirListaDuplaEnc(pedidos); //Exclui o Pedido Entregue Da Lista de Pedidos
+            }
 
        }
-
-
 
     }
 
 
-quebracaixa(pedidoconcluido);
+fechaCaixa(pedidosconcluidos);//ter que ver isso meu parça
 
 //cout<<"conlcuido"<<endl;
-debug(pedidoconcluido);
+//debug(pedidosconcluidos);
 
 
 

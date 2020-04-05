@@ -2,30 +2,28 @@
 #define LISTACLIENTES_H
 #include <StructTipos.h>
 template<typename TIPO,int MAX>
-void iniciaCliente(ListaEstatica<TIPO,MAX>&cliente){
+void iniciaCliente(ListaEstatica<TIPO,MAX>&clientes){
 
-     CLIENTE pessoa;
-     pessoa.nome="roberval";
-     pessoa.endereco=" Logo ali";
-     InserePListaEstatica(cliente,pessoa,0);
+     CLIENTE cliente;       //Cria um Cliente
+     cliente.nome="roberval";    // Atribui um Nome ao Cliente
+     cliente.endereco=" Logo ali"; // Atribui um Endereço ao Cliente
+     InserePListaEstatica(clientes,cliente,0); //insere o Cliente na lista de Clientes
 
-     pessoa.nome="roberval";
-     pessoa.endereco=" Logo ali";
-     InserePListaEstatica(cliente,pessoa,1);
+     cliente.nome="roberval";
+     cliente.endereco=" Logo ali";
+     InserePListaEstatica(clientes,cliente,1);
 
-     pessoa.nome="roberval";
-     pessoa.endereco=" Logo ali";
-     InserePListaEstatica(cliente,pessoa,2);
+     cliente.nome="roberval";
+     cliente.endereco=" Logo ali";
+     InserePListaEstatica(clientes,cliente,2);
 
-     pessoa.nome="roberval";
-     pessoa.endereco=" Logo ali";
-     InserePListaEstatica(cliente,pessoa,3);
+     cliente.nome="roberval";
+     cliente.endereco=" Logo ali";
+     InserePListaEstatica(clientes,cliente,3);
 
-     pessoa.nome="roberval";
-     pessoa.endereco=" Logo ali";
-     InserePListaEstatica(cliente,pessoa,4);
-
-
+     cliente.nome="roberval";
+     cliente.endereco=" Logo ali";
+     InserePListaEstatica(clientes,cliente,4);
 }
 
 

@@ -10,6 +10,7 @@ HEADERS += \
     CardapioEstatico.h \
     Debug.h \
     Entregas.h \
+    FechamentoCaixa.h \
     FuncaoRandom.h \
     ListaClientes.h \
     ListaGenerica.h \

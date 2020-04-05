@@ -20,23 +20,6 @@ void debug(ListaEncadeada<PRODUTO>carrinho){
 }
 
 
-void calculaTempoTotal(ListaDuplaEnc<PEDIDO>&pedido){
-    ElementoDuplaEnc<PEDIDO>*nav=pedido.inicio;
-
-
-    while(nav!=NULL){
-    if(nav->dado.entregador.disponivel==false){
-        nav->dado.tempototal=nav->dado.tempopreparo+nav->dado.entregador.tempoentrega;
-    }
-    else{
-        nav->dado.tempototal=nav->dado.tempopreparo+7;
-    }
-     nav=nav->proximo;
-    }
-
-
-}
-
 
 void debug (ListaDuplaEnc<PEDIDO>pedido){
     ElementoDuplaEnc<PEDIDO>*nav=pedido.inicio;

@@ -9,9 +9,10 @@ using namespace std;
 
 
 
-int tempo(){
+float tempo(){
     struct timespec tempo;
     clock_gettime(CLOCK_REALTIME, &tempo);
+    cout<<tempo.tv_sec<<endl;
     return tempo.tv_nsec;
 }
 

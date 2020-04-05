@@ -4,15 +4,15 @@
 #include <FuncaoRandom.h>
 
 template <typename TIPO,int MAX>
-int CarregarPedidos (ListaEstatica<TIPO,MAX>cardapio,ListaEncadeada<PRODUTO>&carrinho){
-
+void CarregarPedidos (ListaEstatica<TIPO,MAX>cardapio,ListaEncadeada<PRODUTO>&carrinho){
+PRODUTO item;
 
 for(int i=0;i<2;i++){
-        InsereFimEnc(carrinho,cardapio.item[sorteio((MAX-1))].dado);
+    for(int j=0;j<50;j++){
 
 }
-
-
+    InsereFimEnc(carrinho,cardapio.item[sorteio((MAX-1))].dado); //Sorteia e Insere o Pedido na Lista Encadeada Carrinho
+}
 }
 
 
