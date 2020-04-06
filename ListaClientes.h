@@ -5,24 +5,24 @@ template<typename TIPO,int MAX>
 void iniciaCliente(ListaEstatica<TIPO,MAX>&clientes){
 
      CLIENTE cliente;       //Cria um Cliente
-     cliente.nome="roberval";    // Atribui um Nome ao Cliente
-     cliente.endereco=" Logo ali"; // Atribui um Endereço ao Cliente
+     cliente.nome="irineu";    // Atribui um Nome ao Cliente
+     cliente.endereco=" vc nao sabe nem eu"; // Atribui um Endereço ao Cliente
      InserePListaEstatica(clientes,cliente,0); //insere o Cliente na lista de Clientes
 
-     cliente.nome="roberval";
-     cliente.endereco=" Logo ali";
+     cliente.nome=" Carlos ";
+     cliente.endereco=" Rua 302, numero 96";
      InserePListaEstatica(clientes,cliente,1);
 
-     cliente.nome="roberval";
-     cliente.endereco=" Logo ali";
+     cliente.nome=" Rodrigo ";
+     cliente.endereco=" Rua 280, numero 50";
      InserePListaEstatica(clientes,cliente,2);
 
-     cliente.nome="roberval";
-     cliente.endereco=" Logo ali";
+     cliente.nome=" Silvana ";
+     cliente.endereco=" Rua 128, numero 23";
      InserePListaEstatica(clientes,cliente,3);
 
-     cliente.nome="roberval";
-     cliente.endereco=" Logo ali";
+     cliente.nome=" Joao ";
+     cliente.endereco=" Rua 164, numero 34";
      InserePListaEstatica(clientes,cliente,4);
 }
 

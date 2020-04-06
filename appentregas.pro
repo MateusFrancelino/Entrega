@@ -17,4 +17,5 @@ HEADERS += \
     ListaMotoboy.h \
     ManipulaPedido.h \
     PedidosPreCarregados.h \
+    Restaurante.h \
     StructTipos.h

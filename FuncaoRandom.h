@@ -9,18 +9,25 @@ using namespace std;
 
 
 
-float tempo(){
+int tempo(){
     struct timespec tempo;
-    clock_gettime(CLOCK_REALTIME, &tempo);
-    cout<<tempo.tv_sec<<endl;
+
+
+
+    clock_gettime(CLOCK_MONOTONIC, &tempo);
+
     return tempo.tv_nsec;
 }
 
 
 int sorteio(int maximo,int minimo=0){
     int i;
+
     srand(tempo());
+
     i=rand()%maximo+minimo;
+
+
     return i;
 }
 

@@ -4,6 +4,20 @@
 #include <StructTipos.h>
 
 
+
+
+
+
+
+
+
+
+int tempoTPedidos (ListaDuplaEnc<PEDIDO>pedidos){
+    ElementoDuplaEnc<PEDIDO>*pedido=pedidos.fim;
+    return pedido->dado.tempopreparo;
+
+}
+
 /*
 =====================================================================================================================
 */

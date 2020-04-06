@@ -48,7 +48,9 @@ int descobreIndiceLista(ListaEstatica<TIPO,MAX>&l,TIPO dado){
     return descobreIndiceLista(l,dado);
 
 }
-
+/*
+=====================================================================================================================
+*/
 
 
 
@@ -116,7 +118,9 @@ void debug(ListaEncadeada<TIPO>&l){
 
 
 
-
+/*
+=====================================================================================================================
+*/
 
 template <typename TIPO>
 struct ElementoDuplaEnc{
@@ -183,7 +187,23 @@ void debug(ListaDuplaEnc<TIPO>&l){
     debug(l);
 }
 
+template <typename TIPO>
+int contarListaDuplaEnc(ListaDuplaEnc<TIPO>l){
+    ElementoDuplaEnc<TIPO>*nav=l.inicio;
+    int contagem=0;
+    while(nav!=NULL){
+        contagem++;
+        nav=nav->proximo;
 
+    }
+    return contagem;
+
+
+}
+
+/*
+=====================================================================================================================
+*/
 
 
 template<typename TIPO>

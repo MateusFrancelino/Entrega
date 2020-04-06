@@ -8,9 +8,6 @@ void CarregarPedidos (ListaEstatica<TIPO,MAX>cardapio,ListaEncadeada<PRODUTO>&ca
 PRODUTO item;
 
 for(int i=0;i<2;i++){
-    for(int j=0;j<50;j++){
-
-}
     InsereFimEnc(carrinho,cardapio.item[sorteio((MAX-1))].dado); //Sorteia e Insere o Pedido na Lista Encadeada Carrinho
 }
 }
